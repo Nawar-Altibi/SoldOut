@@ -10,6 +10,9 @@
 .svn/
 migrate_working_dir/
 
+# Local screenshots (not published to GitHub)
+Screenshots/
+
 # IntelliJ related
 *.iml
 *.ipr

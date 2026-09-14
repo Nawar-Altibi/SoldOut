@@ -1,240 +1,159 @@
-# Order-Application: A Multi-Vendor Delivery Service App
+# SoldOut
 
-[![Build Status](https://img.shields.io/badge/build-passing-brightgreen)](https://github.com)
-[![Code Coverage](https://img.shields.io/badge/coverage-85%25-green)](https://github.com)
-[![License](https://img.shields.io/badge/license-MIT-blue)](https://github.com)
-[![Flutter Version](https://img.shields.io/badge/flutter-3.3.1+-blue)](https://flutter.dev)
+A multi-vendor delivery app built with Flutter. Customers browse markets and place orders; drivers accept deliveries and complete routes with map-based navigation.
 
-## Project Overview
+[![Flutter](https://img.shields.io/badge/Flutter-3.3.1+-02569B?logo=flutter)](https://flutter.dev)
+[![Dart](https://img.shields.io/badge/Dart-3.3.1+-0175C2?logo=dart)](https://dart.dev)
+[![Architecture](https://img.shields.io/badge/Architecture-Clean-success)](#architecture)
+[![State](https://img.shields.io/badge/State-GetX-blue)](https://pub.dev/packages/get)
+[![License](https://img.shields.io/badge/License-MIT-yellow)](LICENSE)
 
-Order-Application is a comprehensive multi-vendor delivery service application built with Flutter, designed to seamlessly connect customers with various local stores and vendors. The application features distinct user experiences tailored for two primary user roles: **customers** who can browse products, place orders, and track deliveries in real-time, and **drivers** who manage order fulfillment with intelligent route optimization. This co-developed project demonstrates advanced mobile app development practices, including Clean Architecture, reactive state management, and integration with external mapping services for enhanced delivery logistics.
+---
 
-## Key Features
+## Live Demo
 
-### **Role-Based Authentication**
+Watch the full walkthroughs of both user roles:
 
-- **Secure Phone OTP Login:** Implements phone number-based authentication with OTP verification for both customers and drivers
-- **Persistent Sessions:** Token-based authentication with secure storage using SharedPreferences
-- **Role Separation:** Distinct authentication flows for customers and drivers with role-specific dashboards
+| Role | Demo |
+|------|------|
+| **Buyer** | [Buyer.mp4](https://drive.google.com/drive/folders/1JVfOZWIWCjbeinHMCRQnBta3KeY-OB0z?usp=sharing) |
+| **Driver / Delivery** | [Delivery.mp4](https://drive.google.com/drive/folders/1JVfOZWIWCjbeinHMCRQnBta3KeY-OB0z?usp=sharing) |
 
-### **Real-Time Order Tracking**
+📁 [Open the Live Demo folder on Google Drive](https://drive.google.com/drive/folders/1JVfOZWIWCjbeinHMCRQnBta3KeY-OB0z?usp=sharing)
 
-- **Interactive Map Visualization:** Live order tracking using `flutter_map` with OpenStreetMap tile layers
-- **Polyline Route Rendering:** Visual route representation using `flutter_polyline_points` for decoded polyline geometries
-- **Dynamic Location Updates:** Real-time driver location tracking and order status synchronization
+---
 
-### **Advanced Routing & Optimization**
+## App Screens
 
-- **OSRM API Integration:** Automated waypoint sorting and route optimization using Open Source Routing Machine (OSRM) Trip service
-- **Multi-Waypoint Route Planning:** Intelligent sorting of market waypoints based on optimal route calculation
-- **Geolocation Services:** Precise location tracking using `geolocator` package with permission handling
+### Buyer Flow
 
-### **Robust Shopping Cart System**
+| Screen | Description |
+|--------|-------------|
+| Login / OTP | Phone authentication with OTP verification |
+| Home | Personalized feed, cart banner, most-requested products |
+| Market / Product | Browse markets and view product details |
+| Cart | Quantity controls, address & payment selection, checkout |
+| Orders / Modify | Track submitted requests and edit pending orders |
+| Addresses / Profile | Manage delivery locations and account settings |
 
-- **Real-Time Product Validation:** Stock quantity validation with availability checks before adding to cart
-- **Seamless Checkout Flow:** Multi-step checkout process with address and payment method selection
-- **Order State Management:** Comprehensive order lifecycle management (Cart → Pending → In Delivery → Delivered)
-- **Quantity Management:** Smart quantity adjustment with stock availability constraints
+### Driver Flow
 
-### **Bilingual Support (EN/AR)**
+| Screen | Description |
+|--------|-------------|
+| Available Orders | List of orders waiting to be delivered |
+| Order Details | Markets, products, destination, and **Take it** |
+| Active Delivery | Map route with waypoints and **Done** to complete |
 
-- **Full Localization:** Complete app translation using GetX translation system
-- **RTL Support:** Right-to-left layout support for Arabic language
-- **Dynamic Language Switching:** Runtime language change with persistent preference storage
-- **Localized Typography:** Google Fonts integration (Almarai for Arabic, Mulish for English)
+> See the [live demos](https://drive.google.com/drive/folders/1JVfOZWIWCjbeinHMCRQnBta3KeY-OB0z?usp=sharing) for a full visual walkthrough of every screen.
 
-### **Advanced Search & Pagination**
+---
 
-- **Efficient Data Fetching:** RESTful API integration with request deduplication to prevent duplicate network calls
-- **Infinite Scroll Pagination:** Seamless pagination with meta-based page management
-- **Multi-Type Search:** Search functionality for both products and markets with filter options
-- **Request Management:** Active request tracking system to handle concurrent search operations efficiently
+## Features
 
-### **Additional Features**
+- **Role-based auth** — phone OTP login for buyers and drivers, with persistent sessions
+- **Shopping cart & checkout** — stock checks, address/payment selection, order lifecycle
+- **Order management** — pending → in delivery → delivered, with edit support
+- **Driver routing** — OSRM trip optimization, OpenStreetMap map, polylines, geolocation
+- **Bilingual UI** — English / Arabic with RTL support (Mulish / Almarai)
+- **Search & pagination** — products and markets with infinite scroll
+- **Extras** — favorites, addresses, payment cards, product ratings
 
-- **Favorites Management:** Add/remove products to favorites with persistent storage
-- **Address Management:** Multiple delivery address support with geolocation integration
-- **Payment Methods:** Credit card management and selection for orders
-- **Product Ratings:** User rating system for products with review display
-- **Market Browsing:** Browse products by market with category filtering
+---
 
 ## Architecture
 
-The project follows **Clean Architecture** principles, ensuring separation of concerns and maintainability:
+Clean Architecture with GetX for state management, DI, and routing:
 
 ```
-┌─────────────────────────────────────┐
-│      Presentation Layer             │
-│  (Controllers, Pages, Widgets)      │
-│         GetX State Management       │
-└──────────────┬──────────────────────┘
-               │
-┌──────────────▼──────────────────────┐
-│        Domain Layer                 │
-│    (Use Cases, Business Logic)      │
-└──────────────┬──────────────────────┘
-               │
-┌──────────────▼──────────────────────┐
-│         Data Layer                  │
-│  (Repositories, Models, Providers)  │
-│      Network & Local Storage        │
-└─────────────────────────────────────┘
+Presentation  →  Controllers, Pages, Widgets
+Domain        →  Use Cases, Business Logic
+Data          →  Repositories, Models, API Providers
 ```
 
-### State Management
+```
+lib/
+├── App/              # Theme, routes, translations, utilities
+├── Data/             # Models, repositories, network layer
+├── Domain/           # Use cases
+└── Presentation/     # Controllers, pages, widgets
+```
 
-- **GetX:** Reactive state management, dependency injection, and routing
-- **Observable State:** Rx variables and controllers for reactive UI updates
-- **Dependency Injection:** GetX bindings for clean dependency management
+---
 
-## Tech Stack & Tools
+## Tech Stack
 
-| Category                  | Technology                                                                                      |
-| ------------------------- | ----------------------------------------------------------------------------------------------- |
-| **Framework**             | Flutter                                                                                         |
-| **Language**              | Dart (SDK >=3.3.1)                                                                              |
-| **State Management**      | GetX (^4.6.6)                                                                                   |
-| **Architecture**          | Clean Architecture                                                                              |
-| **Networking**            | GetConnect (from GetX), HTTP                                                                    |
-| **Mapping & Geolocation** | flutter_map (^7.0.2), latlong2 (^0.9.1), flutter_polyline_points (^2.1.0), geolocator (^12.0.0) |
-| **Local Storage**         | SharedPreferences (^2.2.3)                                                                      |
-| **UI/UX**                 | Material Design, Responsive UI with flutter_screenutil (^5.9.3)                                 |
-| **Localization**          | GetX Translations                                                                               |
-| **Typography**            | Google Fonts (^6.2.1)                                                                           |
-| **Icons & Images**        | flutter_svg (^2.0.10+1), Custom SVG assets                                                      |
-| **File Handling**         | file_picker (^8.1.6), mime (^2.0.0)                                                             |
-| **UI Components**         | smooth_page_indicator (^1.0.1), pin_code_fields (^8.0.1)                                        |
-| **Build Tools**           | flutter_launcher_icons, flutter_native_splash                                                   |
+| Area | Stack |
+|------|--------|
+| Framework | Flutter / Dart (≥3.3.1) |
+| State & routing | GetX |
+| Maps | flutter_map, OSRM, geolocator, polyline_points |
+| Storage | SharedPreferences |
+| UI | ScreenUtil, Google Fonts, SVG |
+
+---
 
 ## Getting Started
 
 ### Prerequisites
 
-- **Flutter SDK:** Version 3.3.1 or higher
-- **Dart SDK:** Version 3.3.1 or higher
-- **Android Studio / VS Code** with Flutter extensions
-- **Android SDK** (for Android development)
-- **Xcode** (for iOS development, macOS only)
-- **Git** for version control
+- Flutter SDK 3.3.1+
+- Android Studio / VS Code with Flutter extensions
+- Running backend API
 
-### Installation
-
-1. **Clone the repository:**
-
-   ```bash
-   git clone https://github.com/yourusername/Order-Application.git
-   cd Order-Application
-   ```
-
-2. **Install dependencies:**
-
-   ```bash
-   flutter pub get
-   ```
-
-3. **Configure API Endpoint:**
-
-   Update the API host in `lib/App/Const/Host.dart`:
-
-   ```dart
-   const String host = "your-api-host:port";
-   ```
-
-   **Note:** The application requires a backend API server. Configure the host based on your environment:
-
-   - **Local Development:** `192.168.x.x:8000` or `10.0.2.2:8000` (Android Emulator)
-   - **Production:** Your production API endpoint
-
-4. **Run the application:**
-   ```bash
-   flutter run
-   ```
-
-### Environment Configuration
-
-The application uses a centralized host configuration. Ensure your backend API is running and accessible from your device/emulator.
-
-**For Android Emulator:**
-
-- Use `10.0.2.2:8000` to access localhost
-
-**For Physical Device:**
-
-- Use your computer's local IP address (e.g., `192.168.1.x:8000`)
-
-**For Production:**
-
-- Update the host constant to your production API URL
-
-### Build for Production
-
-**Android:**
+### Setup
 
 ```bash
-flutter build apk --release
-# or
-flutter build appbundle --release
+git clone https://github.com/Nawar-Altibi/SoldOut.git
+cd SoldOut
+flutter pub get
 ```
 
-**iOS:**
+Configure the API host in `lib/App/Const/Host.dart`:
+
+```dart
+const String host = "your-api-host:port";
+```
+
+| Environment | Host tip |
+|-------------|----------|
+| Android emulator | `10.0.2.2:8000` |
+| Physical device | Your PC LAN IP, e.g. `192.168.1.x:8000` |
+| Production | Your production API URL |
 
 ```bash
+flutter run
+```
+
+### Build
+
+```bash
+# Android
+flutter build apk --release
+flutter build appbundle --release
+
+# iOS
 flutter build ios --release
 ```
 
-## Screenshots/GIFs
+---
 
-<!-- Add your screenshots here -->
+## Key Technical Highlights
 
-![Login Screen](screenshots/login.png)
-![Home Screen](screenshots/home.png)
-![Order Tracking](screenshots/tracking.gif)
-![Cart Screen](screenshots/cart.png)
-![Driver Dashboard](screenshots/driver.png)
-
-_Note: Replace with actual screenshots of your application_
-
-## Project Structure
-
-```
-lib/
-├── App/                    # App-level configuration
-│   ├── Color/             # Color constants
-│   ├── Const/             # Constants (API host, etc.)
-│   ├── Routes/            # Route definitions
-│   ├── Styles/            # Text styles
-│   ├── Theme/             # App theme
-│   ├── Translations/     # Localization strings
-│   └── Utils/             # Utility functions
-├── Data/                  # Data layer
-│   ├── Models/           # Data models
-│   ├── Providers/        # Network & database providers
-│   └── Repository/       # Repository implementations
-├── Domain/                # Domain layer
-│   └── Usecases/         # Business logic use cases
-└── Presentation/          # Presentation layer
-    ├── Controllers/      # GetX controllers
-    ├── Pages/            # Screen widgets
-    └── Widgets/          # Reusable widgets
-```
-
-## Key Technical Achievements
-
-- **Clean Architecture Implementation:** Strict separation of concerns across three layers
-- **Reactive State Management:** Efficient UI updates using GetX observables
-- **Route Optimization Algorithm:** Integration with OSRM API for intelligent multi-waypoint routing
-- **Request Deduplication:** Advanced request management to prevent redundant API calls
-- **Comprehensive Error Handling:** Custom exception classes with detailed error messages
-- **Type-Safe API Layer:** Strongly-typed API request representation
-- **Responsive Design:** Screen-agnostic UI using flutter_screenutil
-
-## Contact Information
-
-**Mohammed Nawar Al-Tibi**
-
-- **GitHub:** [@nawaraltibi](https://github.com/nawaraltibi)
-- **LinkedIn:** [Nawar Al-Tibi](https://www.linkedin.com/in/nawar-al-tibi/)
+- Clean Architecture across Presentation / Domain / Data
+- Reactive UI with GetX observables
+- Multi-waypoint route sorting via OSRM Trip API
+- Request deduplication for search and pagination
+- Responsive layout with `flutter_screenutil`
 
 ---
 
-_This project was developed as part of a university course on Programming Languages, demonstrating proficiency in Flutter development, software architecture, and mobile application design._
+## Author
+
+**Mohammed Nawar Al-Tibi**
+
+- GitHub: [@Nawar-Altibi](https://github.com/Nawar-Altibi)
+- LinkedIn: [Nawar Al-Tibi](https://www.linkedin.com/in/nawar-al-tibi/)
+
+---
+
+*Developed as a university Programming Languages project — Flutter, Clean Architecture, and mobile delivery UX.*
