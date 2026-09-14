@@ -23,9 +23,28 @@ Watch the full walkthroughs of both user roles:
 
 ---
 
-## App Screens
+## Screenshots
 
 ### Buyer Flow
+
+<p align="center">
+  <img src="Screenshots/Login.png" alt="Login" width="180"/>
+  <img src="Screenshots/OTP.png" alt="OTP Verification" width="180"/>
+  <img src="Screenshots/Home.png" alt="Home" width="180"/>
+  <img src="Screenshots/Market.png" alt="Market" width="180"/>
+</p>
+
+<p align="center">
+  <img src="Screenshots/Product%20Details.png" alt="Product Details" width="180"/>
+  <img src="Screenshots/Cart.png" alt="Cart" width="180"/>
+  <img src="Screenshots/Orders.png" alt="Orders" width="180"/>
+  <img src="Screenshots/Modify%20Orders.png" alt="Modify Order" width="180"/>
+</p>
+
+<p align="center">
+  <img src="Screenshots/Addresses.png" alt="Addresses" width="180"/>
+  <img src="Screenshots/Profile.png" alt="Profile" width="180"/>
+</p>
 
 | Screen | Description |
 |--------|-------------|
@@ -38,13 +57,18 @@ Watch the full walkthroughs of both user roles:
 
 ### Driver Flow
 
+<p align="center">
+  <img src="Screenshots/Delivery%20Orders.png" alt="Available Orders" width="180"/>
+  <img src="Screenshots/Delivery.png" alt="Order Details" width="180"/>
+  <img src="Screenshots/Delivery%20Order%20Details.png" alt="Delivery Details" width="180"/>
+  <img src="Screenshots/Delivery%20Done.png" alt="Delivery Map" width="180"/>
+</p>
+
 | Screen | Description |
 |--------|-------------|
 | Available Orders | List of orders waiting to be delivered |
 | Order Details | Markets, products, destination, and **Take it** |
 | Active Delivery | Map route with waypoints and **Done** to complete |
-
-> See the [live demos](https://drive.google.com/drive/folders/1JVfOZWIWCjbeinHMCRQnBta3KeY-OB0z?usp=sharing) for a full visual walkthrough of every screen.
 
 ---
 
